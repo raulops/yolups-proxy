@@ -3,7 +3,7 @@ name: Auto Mirror Repo
 on:
   push:
     branches:
-      - main  # yalnız main branch push olduqda sync edəcək
+      - main
 
 jobs:
   mirror:
@@ -15,7 +15,6 @@ jobs:
 
       - name: Push to mirror repo
         run: |
-          git git remote add mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git || \
+          git remote add mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git || \
           git remote set-url mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
-
-          git push mirror main
+          git push mirror --mirror
