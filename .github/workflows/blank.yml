@@ -15,5 +15,5 @@ jobs:
 
       - name: Push to mirror repo
         run: |
-          git remote add mirror https://github.com/raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
+          git remote add mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
           git push mirror --mirror
