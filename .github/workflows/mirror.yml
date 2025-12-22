@@ -1,24 +1,3 @@
-# name: Auto Mirror Repo
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   mirror:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-
-#       - name: Push to mirror repo
-#         run: |
-#           git remote add mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git || \
-#           git remote set-url mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
-#           git push mirror --mirror
-
 name: Auto Mirror Repo
 
 on:
@@ -34,9 +13,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Mirror to second repo
-        uses: yesolutions/mirror-action@master
-        with:
-          REMOTE: 'https://github.com/raulops/yolups-proxy.git'
-          GIT_USERNAME: raulops  # Your GitHub username
-          GIT_PASSWORD: ${{ secrets.MIRROR_TOKEN }}  # Your PAT with repo scope
+      - name: Push to mirror repo
+        run: |
+          git config --unset http.https://github.com/.extraheader || true
+          git remote add mirror https://github.com/raulops/yolups-proxy.git || true
+          git remote set-url mirror https://${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
+          git push mirror --mirror --force
+# name: Auto Mirror Repo
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   mirror:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+
+#       - name: Mirror to second repo
+#         uses: yesolutions/mirror-action@master
+#         with:
+#           REMOTE: 'https://github.com/raulops/yolups-proxy.git'
+#           GIT_USERNAME: raulops  # Your GitHub username
+#           GIT_PASSWORD: ${{ secrets.MIRROR_TOKEN }}  # Your PAT with repo scope
