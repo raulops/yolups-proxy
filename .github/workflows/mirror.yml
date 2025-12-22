@@ -38,5 +38,5 @@ jobs:
         uses: yesolutions/mirror-action@master
         with:
           REMOTE: 'https://github.com/raulops/yolups-proxy.git'
-          GIT_USERNAME: raulops  # Your GitHub username
+          GIT_USERNAME: yolups  # Your GitHub username
           GIT_PASSWORD: ${{ secrets.MIRROR_TOKEN }}  # Your PAT with repo scope
