@@ -55,6 +55,8 @@ web_modules/
 .wrangler/
 .wrangler/tmp/
 .wrangler/state/
+package.json
+wrangler.toml
 
 # Optional eslint cache
 .eslintcache
