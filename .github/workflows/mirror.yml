@@ -32,12 +32,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Needed for full history in mirror
+          fetch-depth: 0
 
-      - name: Push to mirror repo
-        run: |
-          git remote add mirror https://github.com/raulops/yolups-proxy.git || true
-          git remote set-url mirror https://${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
-          git push mirror --mirror --force
-        env:
-          GIT_TRACE: 1  # Optional: for debugging if it still fails
+      - name: Mirror to second repo
+        uses: yesolutions/mirror-action@master
+        with:
+          REMOTE: 'https://github.com/raulops/yolups-proxy.git'
+          GIT_USERNAME: raulops  # Your GitHub username
+          GIT_PASSWORD: ${{ secrets.MIRROR_TOKEN }}  # Your PAT with repo scope
