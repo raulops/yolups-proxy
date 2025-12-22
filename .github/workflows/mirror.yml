@@ -1,3 +1,24 @@
+# name: Auto Mirror Repo
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   mirror:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+
+#       - name: Push to mirror repo
+#         run: |
+#           git remote add mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git || \
+#           git remote set-url mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
+#           git push mirror --mirror
+
 name: Auto Mirror Repo
 
 on:
@@ -11,10 +32,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Needed for full history in mirror
 
       - name: Push to mirror repo
         run: |
-          git remote add mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git || \
-          git remote set-url mirror https://raulops:${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
-          git push mirror --mirror
+          git remote add mirror https://github.com/raulops/yolups-proxy.git || true
+          git remote set-url mirror https://${{ secrets.MIRROR_TOKEN }}@github.com/raulops/yolups-proxy.git
+          git push mirror --mirror --force
+        env:
+          GIT_TRACE: 1  # Optional: for debugging if it still fails
